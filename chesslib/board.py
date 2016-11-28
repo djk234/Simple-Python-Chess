@@ -70,6 +70,9 @@ class Board(dict):
         piece = self[p1]
         dest  = self[p2]
 
+        if piece == None:
+            raise InvalidMove
+
         if self.player_turn != piece.color:
             raise NotYourTurn("Not " + piece.color + "'s turn!")
 
@@ -89,6 +92,7 @@ class Board(dict):
         elif not possible_moves:
             raise Draw
         else:
+            print piece.id
             self._do_move(p1, p2)
             self._finish_move(piece, dest, p1,p2)
 
@@ -204,12 +208,16 @@ class Board(dict):
 
         fen[0] = re.compile(r'\d').sub(expand, fen[0])
 
+        num = 0
+
         for x, row in enumerate(fen[0].split('/')):
             for y, letter in enumerate(row):
                 if letter == ' ': continue
                 coord = self.letter_notation((7-x,y))
                 self[coord] = pieces.piece(letter)
+                self[coord].id = num
                 self[coord].place(self)
+                num += 1
 
         if fen[1] == 'w': self.player_turn = 'white'
         else: self.player_turn = 'black'

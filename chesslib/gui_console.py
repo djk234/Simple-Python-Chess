@@ -17,10 +17,14 @@ class BoardGuiConsole(object):
 
     def __init__(self, chessboard):
         self.board = chessboard
+        self.last_move = ""
 
     def move(self):
-        os.system("clear")
+        #os.system("clear")
         self.unicode_representation()
+        #if (len(self.error) == 0):
+        #    print "\n", self.last_move
+        #else:
         print "\n", self.error
         print "State a move in chess notation (e.g. A2A3). Type \"exit\" to leave:\n", ">>>",
         self.error = ''
@@ -31,10 +35,10 @@ class BoardGuiConsole(object):
         try:
             if len(coord) != 4: raise board.InvalidCoord
             self.board.move(coord[0:2], coord[2:4])
-            os.system("clear")
+            self.last_move = coord
+            #os.system("clear")
         except board.ChessError as error:
             self.error = "Error: %s" % error.__class__.__name__
-
         self.move()
 
     def unicode_representation(self):
