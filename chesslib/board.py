@@ -33,7 +33,6 @@ class Board(dict):
 
     axis_y = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
     axis_x = tuple(range(1,9)) # (1,2,3,...8)
-
     captured_pieces = { 'white': [], 'black': [] }
     player_turn = None
     castling = '-'
@@ -92,7 +91,9 @@ class Board(dict):
         elif not possible_moves:
             raise Draw
         else:
-            print piece.id
+            f = open("game_file.txt","a")
+            f.write(str(piece.id)+" "+p2+"\n")
+            f.close()
             self._do_move(p1, p2)
             self._finish_move(piece, dest, p1,p2)
 
@@ -208,7 +209,7 @@ class Board(dict):
 
         fen[0] = re.compile(r'\d').sub(expand, fen[0])
 
-        num = 0
+        num = 1
 
         for x, row in enumerate(fen[0].split('/')):
             for y, letter in enumerate(row):

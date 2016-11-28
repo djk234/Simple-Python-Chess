@@ -20,12 +20,13 @@ class BoardGuiConsole(object):
         self.last_move = ""
 
     def move(self):
-        #os.system("clear")
+        os.system("clear")
         self.unicode_representation()
-        #if (len(self.error) == 0):
-        #    print "\n", self.last_move
-        #else:
-        print "\n", self.error
+        if (len(self.error) == 0 and len(self.last_move) > 0):
+            piece = self.board[self.last_move[2:4]]
+            print "\nLast Move: ", piece, piece.id, " to ", self.last_move[2:4]
+        else:
+            print "\n", self.error
         print "State a move in chess notation (e.g. A2A3). Type \"exit\" to leave:\n", ">>>",
         self.error = ''
         coord = raw_input()
@@ -36,7 +37,7 @@ class BoardGuiConsole(object):
             if len(coord) != 4: raise board.InvalidCoord
             self.board.move(coord[0:2], coord[2:4])
             self.last_move = coord
-            #os.system("clear")
+            os.system("clear")
         except board.ChessError as error:
             self.error = "Error: %s" % error.__class__.__name__
         self.move()
