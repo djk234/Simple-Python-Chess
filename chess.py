@@ -31,4 +31,5 @@ try:
 except ImportError:
     from chesslib.gui_console import display
 finally:
+    open("game_file.txt","w").truncate()
     display(game)
