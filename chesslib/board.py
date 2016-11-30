@@ -91,8 +91,12 @@ class Board(dict):
         elif not possible_moves:
             raise Draw
         else:
-            f = open("game_file.txt","a")
-            f.write(str(piece.id)+" "+p2+"\n")
+            f = open("../../game_file.txt","a")
+            taken_piece = -1
+            if dest != None:
+                taken_piece = dest.id
+            new_dest = str(self.axis_y.index(p2[0])+1)+p2[1]
+            f.write(str(piece.id)+" "+new_dest+" "+str(taken_piece)+"\n")
             f.close()
             self._do_move(p1, p2)
             self._finish_move(piece, dest, p1,p2)
