@@ -30,7 +30,10 @@ class Board(dict):
         * Promoting pawns
         * Fifty-move rule
     '''
-
+    board = [[-1,-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1],
+            [-1,-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1],
+            [-1,-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1],
+            [-1,-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1]]
     axis_y = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H')
     axis_x = tuple(range(1,9)) # (1,2,3,...8)
     captured_pieces = { 'white': [], 'black': [] }
@@ -92,9 +95,17 @@ class Board(dict):
             raise Draw
         else:
             f = open("../../game_file.txt","a")
+            g = open("../../board_file.txt","w")
             taken_piece = -1
             if dest != None:
                 taken_piece = dest.id
+            temp = self.board[int(p1[1])-1][int(self.axis_y.index(p1[0]))]
+            self.board[int(p1[1])-1][int(self.axis_y.index(p1[0]))] = -1
+            self.board[int(p2[1])-1][int(self.axis_y.index(p2[0]))] = piece.id
+            for row in self.board:
+                for space in row:
+                    g.write(str(self.board[self.board.index(row)][row.index(space)])+" ")
+                g.write("\n")
             new_dest = str(self.axis_y.index(p2[0])+1)+p2[1]
             f.write(str(piece.id)+" "+new_dest+" "+str(taken_piece)+"\n")
             f.close()
@@ -213,7 +224,7 @@ class Board(dict):
 
         fen[0] = re.compile(r'\d').sub(expand, fen[0])
 
-        num = 1
+        num = 0
 
         for x, row in enumerate(fen[0].split('/')):
             for y, letter in enumerate(row):
