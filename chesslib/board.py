@@ -96,7 +96,6 @@ class Board(dict):
             raise Draw
         else:
             f = open("game_file.txt","a")
-            print f
             g = open("board_file.txt","w")
             h = open("volume_file.txt","a")
             taken_piece = -1

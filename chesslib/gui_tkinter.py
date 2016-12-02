@@ -21,7 +21,7 @@ class BoardGuiTk(tk.Frame):
         return (self.columns * self.square_size,
                 self.rows * self.square_size)
 
-    def __init__(self, parent, chessboard, square_size=64):
+    def __init__(self, parent, chessboard, square_size=80):
 
         self.chessboard = chessboard
         self.square_size = square_size
@@ -138,16 +138,18 @@ class BoardGuiTk(tk.Frame):
         for coord, piece in self.chessboard.iteritems():
             x,y = self.chessboard.number_notation(coord)
             if piece is not None:
-                filename = "img/%s%s.png" % (piece.color, piece.abbriviation.lower())
+                filename = "img/%s%s.jpg" % (piece.color, piece.abbriviation.lower())
                 piecename = "%s%s%s" % (piece.abbriviation, x, y)
-
                 if(filename not in self.icons):
                     self.icons[filename] = ImageTk.PhotoImage(file=filename, width=32, height=32)
-
+                print self.icons
                 self.addpiece(piecename, self.icons[filename], x, y)
                 self.placepiece(piecename, x, y)
 
     def reset(self):
+        open("board_file.txt","w").truncate()
+        open("game_file.txt","w").truncate()
+        open("volume_file.txt","w").truncate()
         self.chessboard.load(board.FEN_STARTING)
         self.refresh()
         self.draw_pieces()

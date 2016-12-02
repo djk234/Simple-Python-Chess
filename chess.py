@@ -27,10 +27,8 @@ if len(sys.argv) > 1:
         exit(0)
 
 try:
-    print "yo"
     from chesslib.gui_tkinter import display
 except ImportError:
-    print "yo error"
     from chesslib.gui_console import display
 finally:
     open("./game_file.txt","w").truncate()
