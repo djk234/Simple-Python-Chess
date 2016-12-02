@@ -31,6 +31,9 @@ class BoardGuiConsole(object):
         self.error = ''
         coord = raw_input()
         if coord == "exit":
+            open("board_file.txt","w").truncate()
+            open("game_file.txt","w").truncate()
+            open("volume_file.txt","w").truncate()
             print "Bye."
             exit(0)
         try:

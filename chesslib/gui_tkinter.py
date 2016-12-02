@@ -154,6 +154,7 @@ class BoardGuiTk(tk.Frame):
         self.refresh()
 
 def display(chessboard):
+    print "display tinker"
     root = tk.Tk()
     root.title("Simple Python Chess")
 

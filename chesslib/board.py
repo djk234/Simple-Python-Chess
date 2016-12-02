@@ -30,6 +30,7 @@ class Board(dict):
         * Promoting pawns
         * Fifty-move rule
     '''
+    vol_values = [0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85]
     board = [[-1,-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1],
             [-1,-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1],
             [-1,-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1,-1],
@@ -94,8 +95,10 @@ class Board(dict):
         elif not possible_moves:
             raise Draw
         else:
-            f = open("../../game_file.txt","a")
-            g = open("../../board_file.txt","w")
+            f = open("game_file.txt","a")
+            print f
+            g = open("board_file.txt","w")
+            h = open("volume_file.txt","a")
             taken_piece = -1
             if dest != None:
                 taken_piece = dest.id
@@ -107,6 +110,13 @@ class Board(dict):
                     g.write(str(self.board[self.board.index(row)][row.index(space)])+" ")
                 g.write("\n")
             new_dest = str(self.axis_y.index(p2[0])+1)+p2[1]
+            volume = 0
+            print piece.id
+            if (piece.id < 16):
+                volume = self.vol_values[((9-int(p2[1])))-1]
+            else:
+                volume = self.vol_values[int(p2[1])-1]
+            h.write(str(piece.id)+" "+str(volume)+" "+str(taken_piece)+"\n")
             f.write(str(piece.id)+" "+new_dest+" "+str(taken_piece)+"\n")
             f.close()
             self._do_move(p1, p2)
